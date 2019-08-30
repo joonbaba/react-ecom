@@ -13,7 +13,6 @@ const collectionItem = (
 
 <div
 	className='image'
-
 style={{
 	backgroundImage: `url(${imageUrl})`
 }}
