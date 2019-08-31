@@ -1,15 +1,11 @@
 import React from 'react';
-import
-{
+import {
 	Link
-}
-from 'react-router-dom';
+} from 'react-router-dom';
 
-import
-{
+import {
 	ReactComponent as Logo
-}
-from '../../assets/crown.svg';
+} from '../../assets/crown.svg';
 
 import './header.styles.scss';
 
@@ -21,7 +17,7 @@ const Header = () => (
     <div className='options'>
       <Link className='option' to='/shop'>
         SHOP
-      </Link> 
+      </Link>
       <Link className='option' to='/shop'>
         CONTACT
       </Link>
