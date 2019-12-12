@@ -1,5 +1,4 @@
 import firebase from "firebase/app"
-
 import "firebase/firestore"
 import "firebase/auth"
 
@@ -12,7 +11,6 @@ const firebaseConfig = {
   messagingSenderId: "425143090886",
   appId: "1:425143090886:web:c8308b1d0e380984"
 }
-
 firebase.initializeApp(firebaseConfig)
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -55,38 +53,29 @@ export const addCollectionAndDocuments = async (
   return await batch.commit()
 }
 
-// export const convertCollectionsSnapshotToMap = collections => {
-//   const transformedCollection = collections.docs.map(doc => {
-//     const { title, items } = doc.data()
+export const convertCollectionsSnapshotToMap = collections => {
+  const transformedCollection = collections.docs.map(doc => {
+    const { title, items } = doc.data()
 
-//     return {
-//       routeName: encodeURI(title.toLowerCase()),
-//       id: doc.id,
-//       title
-//       items
-//     }
-//   })
-
-//   return transformedCollection.reduce((accumulator, collection) => {
-//     accumulator[collection.title.toLowerCase()] = collection
-//     return accumulator
-//   }, {})
-// }
-
-export const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged(userAuth => {
-      unsubscribe()
-      resolve(userAuth)
-    }, reject)
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    }
   })
+
+  return transformedCollection.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection
+    return accumulator
+  }, {})
 }
 
 export const auth = firebase.auth()
 export const firestore = firebase.firestore()
 
-export const googleProvider = new firebase.auth.GoogleAuthProvider()
-googleProvider.setCustomParameters({ prompt: "select_account" })
-export const signInWithGoogle = () => auth.signInWithPopup(googleProvider)
+const provider = new firebase.auth.GoogleAuthProvider()
+provider.setCustomParameters({ prompt: "select_account" })
+export const signInWithGoogle = () => auth.signInWithPopup(provider)
 
 export default firebase
